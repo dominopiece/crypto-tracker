@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 // createGlobalStyle: 전역 스타일 설정
 const GlobalStyle = createGlobalStyle`
@@ -58,14 +58,23 @@ body {
 }
 a {
   text-decoration: none;
+  color: inherit;
 }
+`;
+
+const Title = styled.h1`
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 56px;
 `;
 
 function Root() {
   return (
     <>
       <GlobalStyle />
-      <h1>Crypto-tracker</h1>
+      <Title>Crypto-tracker</Title>
       <Outlet />
     </>
   );
