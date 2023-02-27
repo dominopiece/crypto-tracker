@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "../Root";
-import Coin from "./Coin";
-import Coins from "./Coins";
+import Root from "./Root";
+import Coin from "./routes/Coin";
+import Coins from "./routes/Coins";
 
 const router = createBrowserRouter([
   {
