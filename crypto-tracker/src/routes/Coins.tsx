@@ -17,9 +17,20 @@ const CoinsList = styled.ul``;
 const Coin = styled.li`
   background-color: white;
   color: ${(props) => props.theme.bgColor};
-  padding: 20px;
   border-radius: 15px;
-  margin-top: 10px;
+  margin-bottom: 10px;
+  a {
+    transition: color 0.2s ease-in;
+    // padding a의 있을 경우 값만큼 클릭 가
+    padding: 20px;
+    // 박스 클릭 가능
+    display: block;
+  }
+  &:hover {
+    a { 
+      color: ${(props) => props.theme.accentColor};
+    }
+  }
 `;
 
 const Title = styled.h1`
