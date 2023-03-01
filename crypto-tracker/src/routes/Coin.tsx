@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useMatch,
+  useParams,
+} from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -50,6 +56,32 @@ const OverviewItem = styled.div`
 
 const Decription = styled.p`
   margin: 20px 0px;
+`;
+
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 10px;
+  border-radius: 10px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    display: block;
+    transition: color 0.5s ease-in;
+  }
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 interface LocationState {
@@ -143,6 +175,11 @@ function Coin() {
   // console.log(state);
   const [info, setInfo] = useState<IInfoData>();
   const [priceInfo, setPriceInfo] = useState<IPriceInfo>();
+  // useMatch: 지정된 주소가 있으면 Object 없으면 null
+  const chartMatch = useMatch("/:coinId/chart");
+  const priceMatch = useMatch("/:coinId/price");
+  // console.log(chartMatch);
+  // console.log(priceMatch);
   useEffect(() => {
     (async () => {
       const infoData = await (
@@ -201,6 +238,15 @@ function Coin() {
               <span>${priceInfo?.quotes.USD.price}</span>
             </OverviewItem>
           </OverView>
+          {/* tab */}
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+          </Tabs>
           <Outlet />
         </>
       )}
