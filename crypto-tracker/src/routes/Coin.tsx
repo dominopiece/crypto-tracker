@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useQueries } from "react-query";
 import {
   Link,
   Outlet,
@@ -7,6 +8,7 @@ import {
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoinInfo, fetchCoinTickers } from "./api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -173,28 +175,31 @@ function Coin() {
   const [loading, setLoading] = useState(true);
   const { state } = useLocation() as LocationState;
   // console.log(state);
-  const [info, setInfo] = useState<IInfoData>();
-  const [priceInfo, setPriceInfo] = useState<IPriceInfo>();
   // useMatch: 지정된 주소가 있으면 Object 없으면 null
   const chartMatch = useMatch("/:coinId/chart");
   const priceMatch = useMatch("/:coinId/price");
   // console.log(chartMatch);
   // console.log(priceMatch);
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      // console.log(infoData);
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      // console.log(priceData);
-      setInfo(infoData);
-      setPriceInfo(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  // // api useQueris
+const {} = useQueries(coinId, () => fetchCoinInfo(coinId))
+const {} = useQueries(coinId, () => fetchCoinTickers(coinId))
+  // const [info, setInfo] = useState<IInfoData>();
+  // const [priceInfo, setPriceInfo] = useState<IPriceInfo>();
+  // useEffect(() => {
+  //   (async () => {
+  //     const infoData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+  //     ).json();
+  //     // console.log(infoData);
+  //     const priceData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+  //     ).json();
+  //     // console.log(priceData);
+  //     setInfo(infoData);
+  //     setPriceInfo(priceData);
+  //     setLoading(false);
+  //   })();
+  // }, [coinId]);
   return (
     <Container>
       <Header>
