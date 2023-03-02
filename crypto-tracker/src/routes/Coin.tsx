@@ -86,7 +86,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
-interface LocationState {
+interface ILocationState {
   state: string;
   // state: {
   //   name: string;
@@ -168,11 +168,11 @@ interface IPriceInfo {
   };
 }
 function Coin() {
-  // const { state } = useLocation() as LocationState;
+  // const { state } = useLocation() as ILocationState;
   const { coinId } = useParams<{ coinId: string }>();
   //   console.log(coinId);
   // const [loading, setLoading] = useState(true);
-  const { state } = useLocation() as LocationState;
+  const { state } = useLocation() as ILocationState;
   // console.log(state);
   // useMatch: 지정된 주소가 있으면 Object 없으면 null
   const chartMatch = useMatch("/:coinId/chart");
@@ -254,7 +254,9 @@ function Coin() {
           {/* tab */}
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`} state={coinId}>
+                Chart
+              </Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
