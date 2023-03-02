@@ -6,12 +6,23 @@ interface ICoinLocation {
   state: string;
 }
 
+interface IHistorical {
+  time_open: number;
+  time_close: number;
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  volume: string;
+  market_cap: number;
+}
+
 function Chart() {
   const { state } = useLocation() as ICoinLocation;
   // console.log(state);
   const coinId = state;
   console.log(coinId);
-  const { isLoading, data } = useQuery(["ohlcv", coinId], () =>
+  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
   return (
