@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
+import { ReactQueryDevtools } from "react-query/devtools"
 
 // createGlobalStyle: 전역 스타일 설정
 const GlobalStyle = createGlobalStyle`
@@ -76,6 +77,7 @@ function Root() {
       <GlobalStyle />
       <Title>Crypto-tracker</Title>
       <Outlet />
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }

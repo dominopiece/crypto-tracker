@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQueries } from "react-query";
+import { useQuery } from "react-query";
 import {
   Link,
   Outlet,
@@ -167,12 +167,11 @@ interface IPriceInfo {
     };
   };
 }
-
 function Coin() {
   // const { state } = useLocation() as LocationState;
   const { coinId } = useParams<{ coinId: string }>();
   //   console.log(coinId);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const { state } = useLocation() as LocationState;
   // console.log(state);
   // useMatch: 지정된 주소가 있으면 Object 없으면 null
@@ -181,8 +180,14 @@ function Coin() {
   // console.log(chartMatch);
   // console.log(priceMatch);
   // // api useQueris
-const {} = useQueries(coinId, () => fetchCoinInfo(coinId))
-const {} = useQueries(coinId, () => fetchCoinTickers(coinId))
+  const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
+    ["info", coinId],
+    () => fetchCoinInfo(String(coinId))
+  );
+  const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceInfo>(
+    ["tickers", coinId],
+    () => fetchCoinTickers(String(coinId))
+  );
   // const [info, setInfo] = useState<IInfoData>();
   // const [priceInfo, setPriceInfo] = useState<IPriceInfo>();
   // useEffect(() => {
@@ -200,16 +205,19 @@ const {} = useQueries(coinId, () => fetchCoinTickers(coinId))
   //     setLoading(false);
   //   })();
   // }, [coinId]);
+
+  const loading = infoLoading && tickersLoading;
+
   return (
     <Container>
       <Header>
         <Title>
           {/* 시크릿 모드에서 접속 시 아래 문구  */}
           {/* {state || "secret mode or direct address"} */}
-          {state ? state : loading ? "Loading.." : info?.name}
+          {state ? state : loading ? "Loading.." : infoData?.name}
         </Title>
       </Header>
-      {loading ? <Loader>Loading..</Loader> : <span>{info?.id}</span>}
+      {loading ? <Loader>Loading..</Loader> : <span>{infoData?.id}</span>}
       {loading ? (
         <Loader>Loading..</Loader>
       ) : (
@@ -217,30 +225,30 @@ const {} = useQueries(coinId, () => fetchCoinTickers(coinId))
           <OverView>
             <OverviewItem>
               <span>Rank:</span>
-              <span>{info?.rank}</span>
+              <span>{infoData?.rank}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Symbol:</span>
-              <span>{info?.symbol}</span>
+              <span>{infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Open Source:</span>
-              <span>{info?.open_source ? "Yes" : "No"}</span>
+              <span>{infoData?.open_source ? "Yes" : "No"}</span>
             </OverviewItem>
           </OverView>
-          <Decription>{info?.description}</Decription>
+          <Decription>{infoData?.description}</Decription>
           <OverView>
             <OverviewItem>
               <span>Total Suply:</span>
-              <span>{priceInfo?.total_supply}</span>
+              <span>{tickersData?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Max Supply: </span>
-              <span>{priceInfo?.total_supply}</span>
+              <span>{tickersData?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Price USD: </span>
-              <span>${priceInfo?.quotes.USD.price}</span>
+              <span>${tickersData?.quotes.USD.price}</span>
             </OverviewItem>
           </OverView>
           {/* tab */}
