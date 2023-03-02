@@ -89,6 +89,7 @@ function Coins() {
     "allCoins",
     fetchCoins
   );
+  console.log(isLoading, data )
   return (
     <Container>
       <Header>
