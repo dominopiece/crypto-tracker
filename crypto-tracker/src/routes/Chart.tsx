@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import { fetchCoinHistory } from "./api";
-
+import ApexCharts from "react-apexcharts";
 interface ICoinLocation {
   state: string;
 }
@@ -21,16 +21,40 @@ function Chart() {
   const { state } = useLocation() as ICoinLocation;
   // console.log(state);
   const coinId = state;
-  console.log(coinId);
+  // console.log(coinId);
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
   return (
-    <>
-      <h1>Chart</h1>
-      <h2>{state}</h2>
-      <h2>{coinId}</h2>
-    </>
+    <div>
+      {isLoading ? (
+        "Loading.. Charts.."
+      ) : (
+        <ApexCharts
+          type="line"
+          // type="line"
+          series={[
+            {
+              name: "test",
+              data: [1, 2, 3, 4, 5, 6],
+            },
+            {
+              name: "test2",
+              data: [11, 12, 13, 14, 15, 16],
+            },
+          ]}
+          options={{
+            theme: {
+              mode: "dark",
+            },
+            chart: {
+              width: 500,
+              height: 500,
+            },
+          }}
+        />
+      )}
+    </div>
   );
 }
 
