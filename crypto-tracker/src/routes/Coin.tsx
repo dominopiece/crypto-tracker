@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -214,6 +215,9 @@ function Coin() {
 
   return (
     <Container>
+      <Helmet>
+        <title>{state ? state : loading ? "Loading.." : infoData?.name}</title>
+      </Helmet>
       <Header>
         <Title>
           {/* 시크릿 모드에서 접속 시 아래 문구  */}
