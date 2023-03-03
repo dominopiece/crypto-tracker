@@ -25,6 +25,8 @@ function Chart() {
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
+
+  // console.log(data?.map(price => Number(price.close)) as number[])
   return (
     <div>
       {isLoading ? (
@@ -34,13 +36,17 @@ function Chart() {
           type="line"
           // type="line"
           series={[
+            // {
+            //   name: "test",
+            //   data: [1, 2, 3, 4, 5, 6],
+            // },
+            // {
+            //   name: "test2",
+            //   data: [11, 12, 23, 14, 15, 16],
+            // },
             {
-              name: "test",
-              data: [1, 2, 3, 4, 5, 6],
-            },
-            {
-              name: "test2",
-              data: [11, 12, 13, 14, 15, 16],
+              name: "price",
+              data: data?.map((price) => Number(price.close)) as number[],
             },
           ]}
           options={{
@@ -48,9 +54,55 @@ function Chart() {
               mode: "dark",
             },
             chart: {
-              width: 500,
+              width: 300,
               height: 500,
+              toolbar: {
+                show: false,
+              },
+              background: "trasparent",
             },
+            grid: { show: false },
+            stroke: {
+              curve: "smooth",
+              width: 3,
+            },
+            xaxis: {
+              labels: {
+                show: false,
+              },
+              axisBorder: {
+                show: false,
+              },
+              axisTicks: {
+                show: false,
+              },
+              type: "datetime", 
+              categories: data?.map((price) =>
+                new Date(price.time_close * 1000).toISOString()
+              ),
+            },
+            yaxis: {
+              labels: {
+                show: false,
+              },
+            },
+            fill: {
+              // colors: ["red" ],
+              // colors: ["#000408", "#B32824"],
+              type: "gradient",
+              gradient: {
+                shade: "dark",
+                gradientToColors: ["white"],
+                stops: [0, 100],
+              },
+            },
+            // 소수점
+            tooltip: {
+              y: {
+                formatter: (value) => `${value.toFixed(2)}`,
+              },
+            },
+            colors: ["pink"],
           }}
         />
       )}
