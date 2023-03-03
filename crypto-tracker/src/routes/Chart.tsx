@@ -22,8 +22,12 @@ function Chart() {
   // console.log(state);
   const coinId = state;
   // console.log(coinId);
-  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
-    fetchCoinHistory(coinId)
+  const { isLoading, data } = useQuery<IHistorical[]>(
+    ["ohlcv", coinId],
+    () => fetchCoinHistory(coinId),
+    {
+      refetchInterval: 10000,
+    }
   );
 
   // console.log(data?.map(price => Number(price.close)) as number[])
@@ -76,7 +80,7 @@ function Chart() {
               axisTicks: {
                 show: false,
               },
-              type: "datetime", 
+              type: "datetime",
               categories: data?.map((price) =>
                 new Date(price.time_close * 1000).toISOString()
               ),

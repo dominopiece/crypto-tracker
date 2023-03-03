@@ -186,7 +186,11 @@ function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceInfo>(
     ["tickers", coinId],
-    () => fetchCoinTickers(String(coinId))
+    () => fetchCoinTickers(String(coinId)),
+    {
+      //0.5 초
+      refetchInterval: 5000,
+    }
   );
   // const [info, setInfo] = useState<IInfoData>();
   // const [priceInfo, setPriceInfo] = useState<IPriceInfo>();
@@ -248,7 +252,8 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price USD: </span>
-              <span>${tickersData?.quotes.USD.price}</span>
+              <span>${tickersData?.quotes.USD.price.toFixed(4)}</span>
+              {/* <span>${tickersData?.quotes.USD.price}</span> */}
             </OverviewItem>
           </OverView>
           {/* tab */}
