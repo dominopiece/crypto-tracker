@@ -268,7 +268,9 @@ function Coin() {
               </Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`/${coinId}/price`} state={coinId}>
+                Price
+              </Link>
             </Tab>
           </Tabs>
           <Outlet />
