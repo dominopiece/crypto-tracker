@@ -22,7 +22,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: ${props => props.theme.cardBgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
   color: ${(props) => props.theme.textColor};
   border: 1px solid white;
   border-radius: 15px;
@@ -99,6 +99,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Coin List</Title>
+        <button>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading..</Loader>

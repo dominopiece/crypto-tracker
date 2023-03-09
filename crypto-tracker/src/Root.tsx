@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Route, Router } from "react-router-dom";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { darkTheme, lightTheme } from "./theme";
@@ -71,15 +71,17 @@ const Title = styled.h1`
   align-items: center;
   font-size: 56px;
 `;
+interface IRouterProps {
+  toggleDark: () => void
+}
+
 
 function Root() {
   const [isDark, setIsDark] = useState(false);
-  const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <button onClick={toggleDark}>Toggle Mode</button>
         <Title>Crypto-tracker</Title>
         <Outlet />
         <ReactQueryDevtools initialIsOpen={true} />
