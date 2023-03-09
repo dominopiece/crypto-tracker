@@ -1,7 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
-import { ReactQueryDevtools } from "react-query/devtools"
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { darkTheme, lightTheme} from "./theme";
 
 // createGlobalStyle: 전역 스타일 설정
 const GlobalStyle = createGlobalStyle`
@@ -74,10 +75,12 @@ const Title = styled.h1`
 function Root() {
   return (
     <>
-      <GlobalStyle />
-      <Title>Crypto-tracker</Title>
-      <Outlet />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Title>Crypto-tracker</Title>
+        <Outlet />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
