@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { darkTheme, lightTheme} from "./theme";
+import { darkTheme, lightTheme } from "./theme";
 
 // createGlobalStyle: 전역 스타일 설정
 const GlobalStyle = createGlobalStyle`
@@ -73,10 +73,13 @@ const Title = styled.h1`
 `;
 
 function Root() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
+        <button onClick={toggleDark}>Toggle Mode</button>
         <Title>Crypto-tracker</Title>
         <Outlet />
         <ReactQueryDevtools initialIsOpen={true} />
