@@ -19,21 +19,19 @@ interface IHistorical {
   market_cap: number;
 }
 
-interface isDark {
-  isDark: boolean;
-  setIsDark: Dispatch<SetStateAction<boolean>>;
-}
-
 interface IRouterProps {
-  // toggleDark: () => void;
-  isDarkSet: isDark[];
+  isDark: boolean;
 }
 
 function Chart() {
+  const { isDark } = useOutletContext<IRouterProps>();
+  console.log("ahh", isDark);
+
   // const location = useLocation() as ICoinLocation;
   const { state } = useLocation() as ICoinLocation;
   // const state = location.state;
   const coinId = state;
+  // console.log(coinId)
   // console.log(coinId);
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
@@ -69,7 +67,9 @@ function Chart() {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              // mode: "dark",
+              // mode: "light"
+              mode: isDark ? "dark" : "light",
             },
             chart: {
               width: 300,

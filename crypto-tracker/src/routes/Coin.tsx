@@ -177,13 +177,13 @@ interface IPriceInfo {
 // }
 
 interface isDark {
-  isDark?: boolean;
+  isDark: boolean;
   setIsDark?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface IRouterProps {
   toggleDark: () => void;
-  // isDark?: boolean;
+  isDark?: boolean;
   // setIsDark: Dispatch<SetStateAction<boolean>>;
   isDarkSet: isDark[];
 }
@@ -233,10 +233,7 @@ function Coin() {
 
   const loading = infoLoading && tickersLoading;
 
-  const {
-    isDarkSet: [isDark, setIsDark],
-  } = useOutletContext<IRouterProps>();
-
+  const isDark = useOutletContext<IRouterProps>();
   return (
     <Container>
       <Helmet>
@@ -298,7 +295,7 @@ function Coin() {
               </Link>
             </Tab>
           </Tabs>
-          <Outlet />
+          <Outlet context={isDark} />
         </>
       )}
     </Container>

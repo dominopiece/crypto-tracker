@@ -87,7 +87,8 @@ function Root() {
         </Title>
         {/* {{}} */}
         <Outlet
-          context={{ toggleDark: toggleDark, isDarkSet: [isDark, setIsDark] }}
+          // context={{ toggleDark: toggleDark, isDarkSet: [isDark, setIsDark] }}
+          context={{toggleDark, isDark }}
         />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
