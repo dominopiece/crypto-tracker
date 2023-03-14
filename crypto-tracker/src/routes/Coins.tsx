@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "./api";
 
@@ -72,6 +72,10 @@ interface ICoinInterface {
   type: string;
 }
 
+interface IRouterProps {
+  toggleDark: () => void;
+}
+
 function Coins() {
   // const [coins, setCoins] = useState<CoinInterface[]>([]);
   // const [loading, setLoading] = useState(true);
@@ -92,6 +96,7 @@ function Coins() {
     fetchCoins
   );
   // console.log(isLoading, data )
+  const { toggleDark } = useOutletContext<IRouterProps>();
   return (
     <Container>
       <Helmet>
@@ -99,7 +104,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Coin List</Title>
-        <button>Toggle Mode</button>
+        <button onClick={toggleDark}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading..</Loader>

@@ -1,9 +1,11 @@
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import { fetchCoinHistory } from "./api";
 import ApexCharts from "react-apexcharts";
+import { Dispatch, SetStateAction } from "react";
 interface ICoinLocation {
   state: string;
+  location?: any;
 }
 
 interface IHistorical {
@@ -17,9 +19,20 @@ interface IHistorical {
   market_cap: number;
 }
 
+interface isDark {
+  isDark: boolean;
+  setIsDark: Dispatch<SetStateAction<boolean>>;
+}
+
+interface IRouterProps {
+  // toggleDark: () => void;
+  isDarkSet: isDark[];
+}
+
 function Chart() {
+  // const location = useLocation() as ICoinLocation;
   const { state } = useLocation() as ICoinLocation;
-  // console.log(state);
+  // const state = location.state;
   const coinId = state;
   // console.log(coinId);
   const { isLoading, data } = useQuery<IHistorical[]>(
@@ -30,6 +43,7 @@ function Chart() {
     }
   );
 
+  // const { isDarkSet: [isDark, setIsDark] } = useOutletContext<IRouterProps>();
   // console.log(data?.map(price => Number(price.close)) as number[])
   return (
     <div>

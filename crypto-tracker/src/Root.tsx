@@ -70,20 +70,25 @@ const Title = styled.h1`
   justify-content: center;
   align-items: center;
   font-size: 56px;
+  color: ${(props) => props.theme.textColor};
 `;
-interface IRouterProps {
-  toggleDark: () => void
-}
-
 
 function Root() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState<boolean>(false);
+  // console.log(isDark)
+  const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Title>Crypto-tracker</Title>
-        <Outlet />
+        <Title>
+          Crypto-tracker
+          <button onClick={toggleDark}>Toggle Mode</button>
+        </Title>
+        {/* {{}} */}
+        <Outlet
+          context={{ toggleDark: toggleDark, isDarkSet: [isDark, setIsDark] }}
+        />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>

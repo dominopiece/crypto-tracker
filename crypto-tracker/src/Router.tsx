@@ -1,14 +1,9 @@
-import { useState } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import Chart from "./routes/Chart";
 import Coin from "./routes/Coin";
 import Coins from "./routes/Coins";
 import Price from "./routes/Price";
-
-interface IRouterProps {
-  toggleDark: () => void
-}
 
 const router = createBrowserRouter([
   {
@@ -31,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "coins",
-        element: <Coins  />,
+        element: <Coins />,
       },
     ],
   },

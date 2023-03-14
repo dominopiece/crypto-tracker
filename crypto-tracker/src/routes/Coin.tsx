@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   Link,
   Outlet,
   useLocation,
   useMatch,
+  useOutletContext,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
@@ -168,6 +169,25 @@ interface IPriceInfo {
     };
   };
 }
+
+// export interface IRouterProps {
+//   toggleDark: () => void;
+//   isDark: boolean;
+//   setIsDark: Dispatch<SetStateAction<boolean>>
+// }
+
+interface isDark {
+  isDark?: boolean;
+  setIsDark?: Dispatch<SetStateAction<boolean>>;
+}
+
+interface IRouterProps {
+  toggleDark: () => void;
+  // isDark?: boolean;
+  // setIsDark: Dispatch<SetStateAction<boolean>>;
+  isDarkSet: isDark[];
+}
+
 function Coin() {
   // const { state } = useLocation() as ILocationState;
   const { coinId } = useParams<{ coinId: string }>();
@@ -212,6 +232,10 @@ function Coin() {
   // }, [coinId]);
 
   const loading = infoLoading && tickersLoading;
+
+  const {
+    isDarkSet: [isDark, setIsDark],
+  } = useOutletContext<IRouterProps>();
 
   return (
     <Container>
@@ -263,6 +287,7 @@ function Coin() {
           {/* tab */}
           <Tabs>
             <Tab isActive={chartMatch !== null}>
+              {/* <Link to={`/${coinId}/chart`} state={{coinId:coinId, isDark:isDark}}> */}
               <Link to={`/${coinId}/chart`} state={coinId}>
                 Chart
               </Link>
