@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Outlet, Route, Router } from "react-router-dom";
+// import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { darkTheme, lightTheme } from "./theme";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 // createGlobalStyle: 전역 스타일 설정
 const GlobalStyle = createGlobalStyle`
@@ -73,22 +75,31 @@ const Title = styled.h1`
   color: ${(props) => props.theme.textColor};
 `;
 
+const Button = styled.button`
+  border-radius: 15px;
+`;
+
 function Root() {
-  const [isDark, setIsDark] = useState<boolean>(false);
+  // recoil
+  const isDark = useRecoilValue(isDarkAtom);
+  const setIsDark = useSetRecoilState(isDarkAtom);
+  // const [isDark, setIsDark] = useState<boolean>(false);
   // console.log(isDark)
-  const toggleDark = () => setIsDark((current) => !current);
+  // const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
         <Title>
           Crypto-tracker
-          <button onClick={toggleDark}>Toggle Mode</button>
+          <Button onClick={() => setIsDark((prev) => !prev)}>
+            Toogle Mode
+          </Button>
         </Title>
         {/* {{}} */}
         <Outlet
-          // context={{ toggleDark: toggleDark, isDarkSet: [isDark, setIsDark] }}
-          context={{toggleDark, isDark }}
+        // context={{ toggleDark: toggleDark, isDarkSet: [isDark, setIsDark] }}
+        // context={{ toggleDark, isDark }}
         />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>

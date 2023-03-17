@@ -1,8 +1,10 @@
 import { useQuery } from "react-query";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { fetchCoinHistory } from "./api";
 import ApexCharts from "react-apexcharts";
-import { Dispatch, SetStateAction } from "react";
+// import { Dispatch, SetStateAction } from "react";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 interface ICoinLocation {
   state: string;
   location?: any;
@@ -19,13 +21,14 @@ interface IHistorical {
   market_cap: number;
 }
 
-interface IRouterProps {
-  isDark: boolean;
-}
+// interface IRouterProps {
+//   isDark: boolean;
+// }
 
 function Chart() {
-  const { isDark } = useOutletContext<IRouterProps>();
-  console.log("ahh", isDark);
+  const isDark = useRecoilValue(isDarkAtom);
+  // const { isDark } = useOutletContext<IRouterProps>();
+  // console.log("ahh", isDark);
 
   // const location = useLocation() as ICoinLocation;
   const { state } = useLocation() as ICoinLocation;

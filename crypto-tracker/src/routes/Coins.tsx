@@ -96,7 +96,7 @@ function Coins() {
     fetchCoins
   );
   // console.log(isLoading, data )
-  const { toggleDark } = useOutletContext<IRouterProps>();
+  // const { toggleDark } = useOutletContext<IRouterProps>();
   return (
     <Container>
       <Helmet>
@@ -104,7 +104,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Coin List</Title>
-        <button onClick={toggleDark}>Toggle Mode</button>
+        {/* <button onClick={toggleDark}>Toggle Mode</button> */}
       </Header>
       {isLoading ? (
         <Loader>Loading..</Loader>

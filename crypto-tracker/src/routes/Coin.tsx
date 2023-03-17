@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+// import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   Link,
   Outlet,
   useLocation,
   useMatch,
-  useOutletContext,
+  // useOutletContext,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
@@ -176,17 +176,17 @@ interface IPriceInfo {
 //   setIsDark: Dispatch<SetStateAction<boolean>>
 // }
 
-interface isDark {
-  isDark: boolean;
-  setIsDark?: Dispatch<SetStateAction<boolean>>;
-}
+// interface isDark {
+//   isDark: boolean;
+//   setIsDark?: Dispatch<SetStateAction<boolean>>;
+// }
 
-interface IRouterProps {
-  toggleDark: () => void;
-  isDark?: boolean;
-  // setIsDark: Dispatch<SetStateAction<boolean>>;
-  isDarkSet: isDark[];
-}
+// interface IRouterProps {
+//   toggleDark: () => void;
+//   isDark?: boolean;
+//   // setIsDark: Dispatch<SetStateAction<boolean>>;
+//   isDarkSet: isDark[];
+// }
 
 function Coin() {
   // const { state } = useLocation() as ILocationState;
@@ -233,7 +233,7 @@ function Coin() {
 
   const loading = infoLoading && tickersLoading;
 
-  const isDark = useOutletContext<IRouterProps>();
+  // const isDark = useOutletContext<IRouterProps>();
   return (
     <Container>
       <Helmet>
@@ -295,7 +295,8 @@ function Coin() {
               </Link>
             </Tab>
           </Tabs>
-          <Outlet context={isDark} />
+          {/* <Outlet context={isDark} /> */}
+          <Outlet />
         </>
       )}
     </Container>
